@@ -1,0 +1,11 @@
+{
+	"id": "B2C_1A_test2",
+	
+	"keys": [
+		{
+			"use": "sig",
+			"kty": "RSA"
+
+		}
+	]
+}
