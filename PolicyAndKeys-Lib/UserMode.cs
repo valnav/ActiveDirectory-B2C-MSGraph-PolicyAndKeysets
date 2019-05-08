@@ -37,7 +37,7 @@ namespace AADB2C.PolicyAndKeys.Lib
         public static string TFKeysetsUploadPkcs12 = "https://graph.microsoft.com/beta/trustframework/keysets/{0}/uploadPkcs12";
 
         //POST https://graph.microsoft.com/beta/trustFramework/keySets/{id}/generateKey {  "use": "sig",  "kty": "RSA",  "nbf": "1508969811",  "exp": "1508973711", } 
-        public static string TFKeysetGenerateKey = "https://graph.microsoft.com/beta/trustFramework/keySets/{id}/generateKey";
+        public static string TFKeysetGenerateKey = "https://graph.microsoft.com/beta/trustFramework/keySets/{0}/generateKey";
 
         //GET https://graph.microsoft.com/beta/trustFramework/backupKeySets 
         public static string TFKeysetBackups = "https://graph.microsoft.com/beta/trustFramework/backupKeySets";

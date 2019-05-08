@@ -1,39 +1,69 @@
-﻿namespace AADB2C.PolicyAndKeys.Client
+﻿using System.Collections.Generic;
+
+namespace AADB2C.PolicyAndKeys.Client
 {
     public class Constants
     {
-        // TODO: update "ClientIdForUserAuthn" with your app guid and "Tenant" with your tenant name
-        //       see README.md for instructions
-        
-        // Client ID is the application guid used uniquely identify itself to the v2.0 authentication endpoint
-        public static string ClientIdForUserAuthn = "ENTER_YOUR_CLIENT_ID";
-        // Your tenant Name, for example "myb2ctenant.onmicrosoft.com"
-        public static string Tenant = "ENTER_YOUR_TENANT_NAME";
+        public const string SECRET_TOKEN = "#secret#";
 
-        public static string CreateKeyset = @"{  ""id"": ""keyset1"" } ";
+        public const string KEYSETID_TOKEN = "#keysetid#";
 
-        public static string UpdateKeyset = @"{
-                                                     ""keys"": [
-                                                            {
-                                                             ""k"": ""{0}"",
-                                                             ""use"": ""sig"",
-                                                             ""kty"": ""oct"",
-                                                             ""e"": ""sjdn"",    
-                                                             ""n"": ""sldssmdnsdlfmsl"" 
-                                                             }
+        public const string NBF_TOKEN = "#nbf#";
+
+        public const string EXP_TOKEN = "#exp#";
+
+        public static string CreateKeyset = @"{{  
+                                                 'id': '{0}'
+                                                }}";
+
+        public static string UpdateOctKeyset = @"{{ 
+                                                     'keys': [ 
+                                                           {{ 
+                                                              'k': '{0}',  
+                                                              'use': 'sig', 
+                                                             'kty': 'oct'
+                                                         }}
+                                                          ]
+                                                }}"; 
+
+        public static string UpdateRSAKeyset = @"{{
+                                                     'keys': [
+                                                            {{
+                                                             'use': 'sig',
+                                                             'kty': 'RSA',
+                                                             'e': '{0}',    
+                                                             'n': '{0}' 
+                                                             }}
                                                          ]
-                                                }";
+                                                }}";
 
         //((DateTimeOffset)foo).ToUnixTimeSeconds();
-        public static string GenerateKey = @"{  ""use"": ""sig"",  ""kty"": ""RSA"",  ""nbf"": ""1508969811"",  ""exp"": ""1508973711"", } ";
+        public static string GenerateKey = @"{{
+                            'use': 'sig',  'kty': 'RSA',  'nbf': '{0}',  'exp': '{1}'
+                            }} ";
 
-        public static string UploadSecret = @"{  ""use"": ""sig"",  ""k"": ""secret"",  ""nbf"": ""1508969811"",  ""exp"": ""1508973711"", } ";
+        public static string UploadSecret = @"{{  'use': 'sig',  'k': '{0}',  'nbf': '{0}',  'exp': '{1}' }} ";
 
-        public static string UploadCertificate = @"{  ""key"": ""sdkalsdasdlasdlvasdasdbvlabdlv"" } ";
+        public static string UploadCertificate = @"{{  'key': '{0}' }} ";
 
-        public static string UploadPkcs = @"{  ""key"": ""sdkalsdasdlasdlvasdasdbvlabdlv"",   ""password"": ""skdjskdj"" } ";
+        public static string UploadPkcs = @"{{  'key': '{0}',   'password': '{0}' }}";
 
+        static Constants()
+        {
+            
+            CreateKeyset = string.Format(CreateKeyset, KEYSETID_TOKEN);
 
+            UpdateOctKeyset = string.Format(UpdateOctKeyset, SECRET_TOKEN);
 
+            UpdateRSAKeyset = string.Format(UpdateRSAKeyset, SECRET_TOKEN);
+
+            GenerateKey = string.Format(GenerateKey, NBF_TOKEN, EXP_TOKEN);
+
+            UploadSecret = string.Format(UploadSecret, SECRET_TOKEN, NBF_TOKEN, EXP_TOKEN);
+
+            UploadCertificate = string.Format(UploadCertificate, SECRET_TOKEN);
+
+            UploadPkcs = string.Format(UploadPkcs, SECRET_TOKEN);
+        }
     }
 }
